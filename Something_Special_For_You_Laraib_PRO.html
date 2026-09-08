@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#09070d">
+<title>Something Special For You ❤️</title>
+<style>
+*{box-sizing:border-box}body{margin:0;min-height:100vh;overflow:hidden;background:#08070d;color:#fff;font-family:system-ui,-apple-system,Segoe UI,Arial}
+canvas{position:fixed;inset:0;width:100%;height:100%}
+.app{position:relative;z-index:2;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:16px}
+.box{width:min(450px,100%);height:min(720px,93vh);border:1px solid #ffffff18;border-radius:30px;background:#ffffff09;backdrop-filter:blur(20px);box-shadow:0 30px 100px #000b;overflow:hidden}
+.head{height:52px;padding:0 17px;display:flex;align-items:center;border-bottom:1px solid #ffffff0d;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#a99da9}.led{width:7px;height:7px;border-radius:50%;background:#ff72b0;box-shadow:0 0 15px #ff72b0;margin-right:9px}.prog{margin-left:auto;width:95px;height:3px;background:#ffffff10;border-radius:9px;overflow:hidden}.prog i{display:block;height:100%;width:0;background:#ff72b0;transition:.7s}
+.view{height:calc(100% - 52px);position:relative}.scene{position:absolute;inset:0;padding:35px 24px;display:flex;flex-direction:column;justify-content:center;text-align:center;overflow:auto;scrollbar-width:none}.scene::-webkit-scrollbar{display:none}.hide{display:none!important}
+.eyebrow{font-size:10px;letter-spacing:3px;color:#a99da9;text-transform:uppercase;margin-bottom:13px}h1{font-size:40px;line-height:1.02;margin:0 0 15px;letter-spacing:-1.5px}h2{font-size:29px;line-height:1.1;margin:0 0 14px}p{color:#cfc4cd;line-height:1.7;font-size:16px}
+.orb{width:105px;height:105px;margin:0 auto 25px;border-radius:50%;background:radial-gradient(circle at 32% 28%,#ffd0e4,#ff659f 38%,#541438 72%,#160a17);box-shadow:0 0 35px #ff5d9a66,0 0 100px #ff5d9a22;animation:float 4s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-9px) scale(1.03)}}
+.btn{border:1px solid #ffffff16;background:#fff;color:#170a12;border-radius:15px;padding:14px 19px;margin:7px 2px;font-weight:800;font-size:15px;cursor:pointer;transition:.2s}.btn:hover{transform:translateY(-3px)}.btn:active{transform:scale(.93) rotate(-2deg)}.ghost{background:#ffffff08;color:#fff}.choices{display:grid;gap:9px}.choices .btn{text-align:left;background:#ffffff08;color:#fff;width:100%;box-shadow:none}
+input{display:block;width:min(330px,100%);margin:14px auto 7px;padding:15px;border-radius:14px;border:1px solid #ffffff17;background:#ffffff08;color:#fff;text-align:center;font-size:16px;outline:none}input:focus{border-color:#ff72b0;box-shadow:0 0 0 4px #ff72b015}.msg{height:20px;color:#ffabc9;font-size:12px}
+.letter{background:#ffffff06;border:1px solid #ffffff0e;border-radius:20px;padding:18px;text-align:left}.letter p{font-size:15px;margin:8px 0}.white{color:#fff;font-weight:750}
+.name{font-size:58px;font-weight:900;letter-spacing:-2px;background:linear-gradient(90deg,#fff,#ff8fbe,#fff);background-size:200%;-webkit-background-clip:text;color:transparent;animation:shine 2.5s linear infinite}
+@keyframes shine{to{background-position:200%}}.enter{animation:enter .7s cubic-bezier(.2,.9,.2,1)}@keyframes enter{from{opacity:0;transform:translateY(20px) scale(.96) rotate(-1deg)}to{opacity:1;transform:none}}
+.shake{animation:shake .5s}.spin{animation:spin .8s}.wiggle{animation:wiggle 1s infinite}@keyframes shake{20%{transform:translateX(-9px)}40%{transform:translateX(9px)}60%{transform:translateX(-6px)}80%{transform:translateX(6px)}}@keyframes spin{from{transform:rotate(-180deg) scale(.5);opacity:0}to{transform:none;opacity:1}}@keyframes wiggle{25%{transform:rotate(-5deg)}75%{transform:rotate(5deg)}}
+#fx{position:fixed;inset:0;z-index:5;pointer-events:none;overflow:hidden}.heart{position:absolute;bottom:-30px;animation:up 4.5s linear forwards}@keyframes up{15%{opacity:1}100%{transform:translateY(-110vh) rotate(260deg) scale(1.4);opacity:0}}
+</style>
+</head>
+<body><canvas id="bg"></canvas><div id="fx"></div>
+<div class="app"><div class="box"><div class="head"><span class="led"></span>Something Special <div class="prog"><i id="bar"></i></div></div><div class="view">
+
+<section class="scene enter" id="s0"><div class="orb"></div><div class="eyebrow">A little secret</div><h1>Something Special<br>For You ❤️</h1><p>There are a few things hidden inside this little journey.</p><button class="btn" onclick="go(1)">Begin →</button></section>
+
+<section class="scene hide" id="s1"><div class="eyebrow">01 / 05</div><h2>First lock 🧩</h2><p>Complete the word:</p><h2>L _ K E</h2><input id="a1" maxlength="1" placeholder="Missing letter"><div class="msg" id="m1"></div><button class="btn" onclick="q1()">Unlock</button></section>
+
+<section class="scene hide" id="s2"><div class="eyebrow">02 / 05</div><h2>You're in 😌</h2><p>Which one sounds most like a secret?</p><div class="choices"><button class="btn" onclick="q2(0)">A — A random message.</button><button class="btn" onclick="q2(1)">B — Something I've never said.</button><button class="btn" onclick="q2(0)">C — A funny meme.</button></div><div class="msg" id="m2"></div></section>
+
+<section class="scene hide" id="s3"><div class="eyebrow">03 / 05</div><h2>Some things are hard to say.</h2><p>Feeling something is easy...</p><div class="name" id="typing"></div><p>...but saying it out loud is another story.</p><button class="btn" onclick="go(4)">Continue →</button></section>
+
+<section class="scene hide" id="s4"><div class="eyebrow">04 / 05</div><h2>One last guess 👀</h2><p>Whose name has been hiding behind all this?</p><input id="a4" placeholder="Type the name"><div class="msg" id="m4"></div><button class="btn" onclick="q4()">Reveal</button></section>
+
+<section class="scene hide" id="s5"><div class="eyebrow">05 / 05</div><div class="name spin">Laraib</div><p>Okay... now the real part begins.</p><button class="btn" onclick="go(6)">Read what was never said →</button></section>
+
+<section class="scene hide" id="s6"><div class="eyebrow">A message from the heart</div><h2>Laraib... ❤️</h2><div class="letter"><p>Pata nahi ye sab tumhe kaise lagega. Shayad main ye baat saamne se kabhi keh bhi na pata.</p><p>Sach ye hai ke main kaafi time se tumhe like karta hoon. Bohat baar socha ke bata doon, lekin har baar kisi na kisi wajah se ruk gaya.</p><p>Shayad main apni feelings explain karne mein itna acha nahi hoon ke jo dil mein hai, woh exactly words mein bata sakun.</p></div><button class="btn" onclick="go(7)">There's more... →</button></section>
+
+<section class="scene hide" id="s7"><div class="eyebrow">No big promises</div><h2>Just being honest.</h2><div class="letter"><p class="white">Tum mere liye special ho.</p><p>Main tumse koi badi badi promises nahi kar raha. Bas jo feel karta hoon, woh honestly keh raha hoon.</p><p>Ho sakta hai kuch cheezein hain jo main tumhare saamne kabhi properly keh hi nahi saka.</p></div><button class="btn" onclick="go(8)">Final part →</button></section>
+
+<section class="scene hide" id="s8"><div class="orb" style="width:82px;height:82px"></div><div class="eyebrow">The question</div><h2>Laraib...</h2><p class="white" style="font-size:22px">Will you accept me?</p><div class="letter"><p>Lekin ek baat pehle hi clear kar doon...</p><p>Agar tum accept kar bhi leti ho, to zaroori nahi ke hum zyada aage barh paayein. Ho sakta hai kuch circumstances ki wajah se humari story wahan tak na ja sake jahan hum chahte hain.</p><p>Main tumse koi false promise nahi karna chahta.</p><p>Bas itna chahta hoon ke tumhe kabhi ye na lage ke meri feelings fake thi.</p><p class="white">Main shayad apni feelings tumhare saamne kabhi poori tarah na rakh saka... lekin tum hamesha mere dil mein rahogi. ❤️</p></div><button class="btn" onclick="yes()">❤️ Yes</button><button class="btn ghost" onclick="maybe()">Maybe...</button><p id="result" class="white"></p></section>
+
+</div></div></div>
+<script>
+const S=[...document.querySelectorAll('.scene')],bar=document.getElementById('bar');
+function go(n){S.forEach((x,i)=>x.classList.toggle('hide',i!==n));S[n].classList.remove('enter');void S[n].offsetWidth;S[n].classList.add('enter');bar.style.width=(n/(S.length-1)*100)+'%';if(n===3)typeName();window.scrollTo(0,0)}
+function err(id,t){let x=document.getElementById(id);x.textContent=t;x.classList.remove('shake');void x.offsetWidth;x.classList.add('shake')}
+function q1(){if(document.getElementById('a1').value.trim().toLowerCase()==='i')go(2);else err('m1','😂 Nope! Try again.')}
+function q2(x){if(x===1)go(3);else err('m2','😂 Too obvious. Try again.')}
+function q4(){if(document.getElementById('a4').value.trim().toLowerCase()==='laraib')go(5);else err('m4','👀 The name is closer than you think...')}
+function typeName(){let e=document.getElementById('typing');if(e.dataset.done)return;e.dataset.done=1;let t='Laraib',i=0;e.textContent='';let z=setInterval(()=>{e.textContent=t.slice(0,i++)+'|';if(i>t.length){clearInterval(z);e.textContent=t}},180)}
+function yes(){document.getElementById('result').textContent='❤️ Thank you for reaching the end.';for(let i=0;i<55;i++){let h=document.createElement('span');h.className='heart';h.textContent=['❤️','💗','✨','💕'][i%4];h.style.left=Math.random()*100+'%';h.style.fontSize=(14+Math.random()*20)+'px';h.style.animationDelay=Math.random()*1.5+'s';document.getElementById('fx').appendChild(h);setTimeout(()=>h.remove(),5000)}}
+function maybe(){document.getElementById('result').textContent='No pressure. Some answers need time. ❤️'}
+const c=document.getElementById('bg'),x=c.getContext('2d');let W,H,p=[];
+function resize(){W=innerWidth;H=innerHeight;c.width=W*devicePixelRatio;c.height=H*devicePixelRatio;x.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);p=Array.from({length:65},()=>({x:Math.random()*W,y:Math.random()*H,r:.5+Math.random()*1.5,v:.08+Math.random()*.3,a:.15+Math.random()*.5}))}
+function draw(){x.clearRect(0,0,W,H);for(const a of p){a.y-=a.v;if(a.y<0)a.y=H;x.globalAlpha=a.a;x.fillStyle='#fff';x.beginPath();x.arc(a.x,a.y,a.r,0,7);x.fill()}requestAnimationFrame(draw)}addEventListener('resize',resize);resize();draw();
+</script></body></html>
